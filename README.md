@@ -9,5 +9,6 @@ Lvgl is a small and powerful graphic lib and used to create interface applicatio
 
 TODO:
 
-[ ] UIKit
-[ ] GraphicAcc
+- [ ] UIKit
+- [ ] Reactivity Supporting
+- [ ] GraphicAcc
