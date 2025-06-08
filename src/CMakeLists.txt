@@ -4,8 +4,13 @@ if (NOT LVGL_INCLUDE_DIR)
     set(LVGL_INCLUDE_DIR "${PROJ_DIR}/include")
 endif ()
 
+if (NOT CJSON_INCLUDE_DIR)
+    set(CJSON_INCLUDE_DIR "${PROJ_DIR}/include")
+endif()
+
 include_directories(
         ${LVGL_INCLUDE_DIR}
+        ${CJSON_INCLUDE_DIR}
         ${PROJ_DIR}/include
 )
 

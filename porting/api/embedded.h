@@ -2,7 +2,7 @@
     -----------------------------------------------------------
 
  	easyVGL
- 	utils.h    2025/6/8   
+ 	embedded.h    2025/6/8   
  	
  	@link    : https://github.com/shezw/tinygui
  	@author	 : shezw
@@ -11,25 +11,19 @@
     -----------------------------------------------------------
 */
 
-#ifndef EVG_UTILS_H
-#define EVG_UTILS_H
+#ifndef EVG_PORTING_EMBEDDED_EMBEDDED_H
+#define EVG_PORTING_EMBEDDED_EMBEDDED_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "utils/types.h"
-#include "utils/lv_wrapper.h"
-#include "utils/fonts.h"
-#include "utils/styles.h"
-#include "utils/curl.h"
-#include "utils/device_ctl.h"
 
-#include "utils/cson/cson.h"
+
+
 
 #ifdef __cplusplus
 }
 #endif
 
-
-#endif //EVG_UTILS_H
+#endif //EVG_PORTING_EMBEDDED_EMBEDDED_H
