@@ -2,10 +2,10 @@
 // Created by 志伟佘 on 2023/6/26.
 //
 
-#ifndef EASYVGL_BASE_STYLES_H
-#define EASYVGL_BASE_STYLES_H
+#ifndef EVG_UTILS_STYLES_H
+#define EVG_UTILS_STYLES_H
 
-#include "tools.h"
+#include "lv_wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,7 +16,7 @@ extern "C" {
 #define SET_STYLES( view, styles, styleList ) styleList = lv_view_set_styles( view, styles, styleList )
 #define SET_STYLE( view, style ) lv_view_set_style( view, style )
 
-typedef enum LvStyle_ViewAlign_e
+typedef enum EvgStyle_ViewAlign_e
 {
     ViewAlign_Default = LV_ALIGN_DEFAULT,
     ViewAlign_TopLeft = LV_ALIGN_TOP_LEFT,
@@ -32,7 +32,7 @@ typedef enum LvStyle_ViewAlign_e
     ViewAlign_Max
 } ViewAlign;
 
-typedef enum LvStyle_TextOverflow_e
+typedef enum EvgStyle_TextOverflow_e
 {
     ViewTextOverflow_Default = 0,
 
@@ -45,7 +45,7 @@ typedef enum LvStyle_TextOverflow_e
     ViewTextOverflow_Max
 } TextOverflow;
 
-typedef enum LvStyle_TextAlign_e
+typedef enum EvgStyle_TextAlign_e
 {
     ViewTextAlign_Default = 0,
     ViewTextAlign_Auto = LV_TEXT_ALIGN_AUTO,
@@ -56,7 +56,7 @@ typedef enum LvStyle_TextAlign_e
     ViewTextAlign_Max
 } TextAlign;
 
-typedef enum LvStyle_Type_e
+typedef enum EvgStyle_Type_e
 {
     ViewStyle_None = 0,
 
@@ -153,7 +153,7 @@ typedef enum ViewStyleState_e
 
 } ViewStyleState;
 
-typedef struct LvViewStyle_t
+typedef struct EvgViewStyle_t
 {
     ViewStyleType style;
     ViewStyleState onState;
@@ -162,9 +162,9 @@ typedef struct LvViewStyle_t
     void *  obj_v;
     i32     int_v;
 
-} LvViewStyle;
+} EvgViewStyle;
 
-typedef struct LvGradientDef_t
+typedef struct EvgGradientDef_t
 {
     u8 dir;
 
@@ -173,15 +173,15 @@ typedef struct LvGradientDef_t
 
     u32 c2;
     u32 p2;
-} LvGradientDef;
+} EvgGradientDef;
 
-typedef struct LvShadowDef_t
+typedef struct EvgShadowDef_t
 {
     u32 color;
     i32 size;
     i32 x;
     i32 y;
-} LvShadowDef;
+} EvgShadowDef;
 
 typedef struct ViewSize_t
 {
@@ -199,12 +199,12 @@ typedef struct ViewPos_t
 
 #define AnyView void *
 
-LvStyle * lv_view_set_styles( LvView view, LvViewStyle * styles, LvStyle * styleList );
-void      lv_view_set_style( LvView view, LvViewStyle * style );
+EvgStyle * lv_view_set_styles( EvgView view, EvgViewStyle * styles, EvgStyle * styleList );
+void      lv_view_set_style( EvgView view, EvgViewStyle * style );
 
-void markCustomStyle        ( LvStyle * styleList, LvStyle style );
-void releaseCustomStyles    ( LvStyle * styleList, LvStyle style );
-void cleanCustomStyles      ( LvStyle * styleList );
+void markCustomStyle        ( EvgStyle * styleList, EvgStyle style );
+void releaseCustomStyles    ( EvgStyle * styleList, EvgStyle style );
+void cleanCustomStyles      ( EvgStyle * styleList );
 
 
 
@@ -316,4 +316,4 @@ void cleanCustomStyles      ( LvStyle * styleList );
 #endif
 
 
-#endif //EASYVGL_BASE_STYLES_H
+#endif //EVG_UTILS_STYLES_H

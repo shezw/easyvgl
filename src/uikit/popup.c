@@ -11,7 +11,6 @@
     -----------------------------------------------------------
 */
 
-#include "app.h"
 #include "popup.h"
 
 static EvgViewStyle popupMaskStyles[] =
@@ -19,7 +18,7 @@ static EvgViewStyle popupMaskStyles[] =
 //                cssBg(0x0),
                 cssBgOpa(0),
                 // cssBgImg("S:./app/assets/images/maskBg.png"),
-                cssSize(LV_SIZE_COVER,LV_SIZE_COVER),
+                cssSize(LV_PCT(100),LV_PCT(100)),
                 cssEnd()
         };
 
@@ -277,13 +276,13 @@ static void popupViewInitButtons( char * confirmText, char * cancelText, PopupVi
     SET_STYLES( this->buttonArea, buttonAreaStyles, this->styleList );
 //    lv_obj_set_size( this->buttonArea, 274, 54 );
 
-    this->buttonConfirm     = evg_view_clean(lv_button( this->buttonArea ));
+    this->buttonConfirm     = evg_view_clean(evg_button( this->buttonArea ));
 
     SET_STYLES( this->buttonConfirm, buttonConfirmStyles, this->styleList );
 
     if( cancelText != NULL ) {
-        this->buttonCancel = evg_view_clean(lv_button(this->buttonArea));
-        this->buttonCancelLabel = lv_label(this->buttonCancel);
+        this->buttonCancel = evg_view_clean(evg_button(this->buttonArea));
+        this->buttonCancelLabel = evg_label(this->buttonCancel);
         lv_label_set_text( this->buttonCancelLabel, cancelText );
         lv_obj_center( this->buttonCancelLabel );
         lv_obj_add_event_cb(this->buttonCancel, popupViewCanceled, LV_EVENT_CLICKED, this);
@@ -295,7 +294,7 @@ static void popupViewInitButtons( char * confirmText, char * cancelText, PopupVi
     {
         lv_obj_center( this->buttonConfirm );
     }
-    this->buttonConfirmLabel = lv_label(this->buttonConfirm);
+    this->buttonConfirmLabel = evg_label(this->buttonConfirm);
     lv_label_set_text( this->buttonConfirmLabel, confirmText != NULL ? confirmText : "确定" );
 
     lv_obj_center( this->buttonConfirmLabel );
@@ -351,13 +350,13 @@ PopupView * popupViewCreate( PopupType type, const char * title, const char * de
 
     this->container = evg_view_clean(evg_view(this->self));
 
-    this->titleLabel = lv_label( this->container );
+    this->titleLabel = evg_label( this->container );
     lv_label_set_text( this->titleLabel, title );
 
     SET_STYLES(this->titleLabel, popupTitleStyles, this->styleList);
 
     if (desc) {
-        this->descLabel = lv_label( this->container );
+        this->descLabel = evg_label( this->container );
         SET_STYLES(this->descLabel, popupDescStyles, this->styleList);
         lv_label_set_text( this->descLabel, desc );
 

@@ -11,9 +11,9 @@
     -----------------------------------------------------------
 */
 
-#include "tools.h"
+#include "lv_wrapper.h"
 
-EvgView lv_view( EvgView parent )
+EvgView evg_view( EvgView parent )
 {
     EvgView obj = lv_obj_create( parent );
     lv_obj_set_size( obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT );
@@ -22,18 +22,18 @@ EvgView lv_view( EvgView parent )
 }
 
 
-void lv_view_remove( EvgView obj )
+void evg_view_remove( EvgView obj )
 {
     lv_obj_del(obj);
 }
 
-EvgView  lv_box( EvgView parent )
+EvgView  evg_box( EvgView parent )
 {
-    return lv_view_clean(lv_view_transp(lv_view(parent)));
+    return evg_view_clean(evg_view_transp(evg_view(parent)));
 }
 
 
-EvgImg  lv_image( EvgView parent, const char * src )
+EvgImg  evg_image( EvgView parent, const char * src )
 {
     EvgImg img = lv_img_create( parent );
     lv_obj_set_size( img, LV_SIZE_CONTENT, LV_SIZE_CONTENT );
@@ -44,7 +44,7 @@ EvgImg  lv_image( EvgView parent, const char * src )
     return img;
 }
 
-EvgLabel  lv_label( EvgView parent )
+EvgLabel  evg_label( EvgView parent )
 {
     EvgLabel label = lv_label_create( parent );
     lv_obj_set_size( label, LV_SIZE_CONTENT, LV_SIZE_CONTENT );
@@ -52,29 +52,29 @@ EvgLabel  lv_label( EvgView parent )
     return label;
 }
 
-EvgLabel lv_text( EvgView parent, const char * str )
+EvgLabel evg_text( EvgView parent, const char * str )
 {
-    EvgLabel label = lv_label(parent);
+    EvgLabel label = evg_label(parent);
     lv_label_set_text(label,str);
     return label;
 }
 
-EvgBtn  lv_button( EvgView parent )
+EvgBtn  evg_button( EvgView parent )
 {
     EvgBtn button = lv_btn_create( parent );
 
     return button;
 }
 
-EvgView lv_flex_view( EvgView parent, lv_flex_flow_t flex )
+EvgView evg_flex_view( EvgView parent, lv_flex_flow_t flex )
 {
-    EvgView obj = lv_view( parent );
+    EvgView obj = evg_view( parent );
     lv_obj_set_layout(obj, LV_LAYOUT_FLEX);
     lv_obj_set_flex_flow(obj, flex);
     return obj;
 }
 
-EvgStyle lv_view_shadow( u32 color, u16 size, i16 x, i16 y )
+EvgStyle evg_view_shadow( u32 color, u16 size, i16 x, i16 y )
 {
     lv_style_t * style = malloc( sizeof(lv_style_t) );
     lv_style_init(style);
@@ -88,7 +88,7 @@ EvgStyle lv_view_shadow( u32 color, u16 size, i16 x, i16 y )
     return style;
 }
 
-EvgStyle lv_view_gradient_cus( u32 c1, u32 c2, i16 pct1, i16 pct2, bool verOrHor )
+EvgStyle evg_view_gradient_cus( u32 c1, u32 c2, i16 pct1, i16 pct2, bool verOrHor )
 {
     lv_style_t * style = malloc( sizeof(lv_style_t) );
     lv_style_init(style);
@@ -111,47 +111,47 @@ EvgStyle lv_view_gradient_cus( u32 c1, u32 c2, i16 pct1, i16 pct2, bool verOrHor
 }
 
 
-EvgStyle lv_view_gradient_ver_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 )
+EvgStyle evg_view_gradient_ver_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 )
 {
-    return lv_view_gradient_cus( c1, c2, pct1, pct2, true );
+    return evg_view_gradient_cus( c1, c2, pct1, pct2, true );
 }
 
-EvgStyle lv_view_gradient_hor_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 )
+EvgStyle evg_view_gradient_hor_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 )
 {
-    return lv_view_gradient_cus( c1, c2, pct1, pct2, false );
+    return evg_view_gradient_cus( c1, c2, pct1, pct2, false );
 }
 
-LvStyle lv_view_gradient_ver(u32 c1, u32 c2 )
+EvgStyle evg_view_gradient_ver(u32 c1, u32 c2 )
 {
-    return lv_view_gradient_ver_cus( c1, c2, 0, 255 );
+    return evg_view_gradient_ver_cus( c1, c2, 0, 255 );
 }
 
-LvStyle lv_view_gradient_hor( u32 c1, u32 c2 )
+EvgStyle evg_view_gradient_hor( u32 c1, u32 c2 )
 {
-    return lv_view_gradient_hor_cus( c1, c2, 0, 255 );
+    return evg_view_gradient_hor_cus( c1, c2, 0, 255 );
 }
 
 
-LvView lv_view_radius( LvView view, int r, lv_state_t state )
+EvgView evg_view_radius( EvgView view, int r, lv_state_t state )
 {
     lv_obj_set_style_radius( view, r, state );
     return view;
 }
 
-LvView  lv_view_max( LvView view )
+EvgView  evg_view_max( EvgView view )
 {
     lv_obj_set_size( view, LV_PCT(100), LV_PCT(100) );
     return view;
 }
 
-LvView  lv_view_content( LvView view )
+EvgView  evg_view_content( EvgView view )
 {
     lv_obj_set_size( view, LV_SIZE_CONTENT, LV_SIZE_CONTENT );
     return view;
 }
 
 
-LvView lv_view_clean( LvView obj )
+EvgView evg_view_clean( EvgView obj )
 {
     lv_obj_set_style_pad_all( obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT );
     lv_obj_set_style_border_width( obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -163,25 +163,25 @@ LvView lv_view_clean( LvView obj )
     return obj;
 }
 
-LvView lv_view_transp( LvView obj )
+EvgView evg_view_transp( EvgView obj )
 {
     lv_obj_set_style_bg_opa(obj,0, LV_PART_MAIN | LV_STATE_DEFAULT );
     return obj;
 }
 
-LvView lv_view_hide( LvView obj )
+EvgView evg_view_hide( EvgView obj )
 {
     lv_obj_add_flag( obj, LV_OBJ_FLAG_HIDDEN );
     return obj;
 }
 
-LvView lv_view_show( LvView obj )
+EvgView evg_view_show( EvgView obj )
 {
     lv_obj_clear_flag( obj, LV_OBJ_FLAG_HIDDEN );
     return obj;
 }
 
-LvView  lv_view_scrollable( LvView obj )
+EvgView  evg_view_scrollable( EvgView obj )
 {
     lv_obj_add_flag( obj, LV_OBJ_FLAG_SCROLLABLE );
     lv_obj_set_scrollbar_mode( obj, LV_SCROLLBAR_MODE_ACTIVE );
@@ -189,10 +189,10 @@ LvView  lv_view_scrollable( LvView obj )
     return obj;
 }
 
-LvFont lv_font( char * src, int fontSize, LV_FT_FONT_STYLE fstyle )
+EvgFont evg_font( char * src, int fontSize, LV_FT_FONT_STYLE fstyle )
 {
     /*Create a font*/
-    lv_ft_info_t * info = (lv_ft_info_t *) malloc( sizeof(lv_ft_info_t) ) ;
+    lv_ft_info_t * info = (lv_ft_info_t *) lv_mem_alloc( sizeof(lv_ft_info_t) ) ;
     /*FreeType uses C standard file system, so no driver letter is required.*/
     info->name   = src;
     info->weight = fontSize;
@@ -204,7 +204,7 @@ LvFont lv_font( char * src, int fontSize, LV_FT_FONT_STYLE fstyle )
     }
 
     /*Create style with the new font*/
-    lv_style_t * style = (lv_style_t *) malloc( sizeof(lv_style_t) ) ;
+    lv_style_t * style = (lv_style_t *) lv_mem_alloc( sizeof(lv_style_t) ) ;
     lv_style_init(style);
     lv_style_set_text_font( style, info->font);
     lv_style_set_text_align( style, LV_TEXT_ALIGN_CENTER);
@@ -214,28 +214,28 @@ LvFont lv_font( char * src, int fontSize, LV_FT_FONT_STYLE fstyle )
 }
 
 
-i16     lv_left_of( LvView view, i16 offset )
+i16     evg_left_of( EvgView view, i16 offset )
 {
     if ( view == NULL ) return offset;
     lv_obj_update_layout( view );
     return offset + lv_obj_get_style_pad_left( view, 0 ) + lv_obj_get_x( view );
 }
 
-i16     lv_right_of( LvView view, i16 offset )
+i16     evg_right_of( EvgView view, i16 offset )
 {
     if ( view == NULL ) return offset;
     lv_obj_update_layout( view );
     return offset + lv_obj_get_x( view ) + lv_obj_get_width(view);
 }
 
-i16     lv_top_of( LvView view, i16 offset )
+i16     evg_top_of( EvgView view, i16 offset )
 {
     if ( view == NULL ) return offset;
     lv_obj_update_layout( view );
     return offset + lv_obj_get_style_pad_top( view, 0 ) + lv_obj_get_y( view );
 }
 
-i16     lv_bottom_of( LvView view, i16 offset )
+i16     evg_bottom_of( EvgView view, i16 offset )
 {
     if ( view == NULL ) return offset;
     lv_obj_update_layout( view );
@@ -243,31 +243,31 @@ i16     lv_bottom_of( LvView view, i16 offset )
 }
 
 
-void    lv_left_to( LvView view, LvView toView, i16 offset )
+void    evg_left_to( EvgView view, EvgView toView, i16 offset )
 {
-    lv_obj_set_x( view, lv_left_of( toView , offset) );
+    lv_obj_set_x( view, evg_left_of( toView , offset) );
 }
 
-void    lv_right_to( LvView view, LvView toView, i16 offset )
+void    evg_right_to( EvgView view, EvgView toView, i16 offset )
 {
-    lv_obj_set_x( view, lv_right_of( toView , offset) );
+    lv_obj_set_x( view, evg_right_of( toView , offset) );
 }
 
-void    lv_top_to( LvView view, LvView toView, i16 offset )
+void    evg_top_to( EvgView view, EvgView toView, i16 offset )
 {
-    lv_obj_set_y( view, lv_top_of( toView , offset) );
+    lv_obj_set_y( view, evg_top_of( toView , offset) );
 }
 
-void    lv_bottom_to( LvView view, LvView toView, i16 offset )
+void    evg_bottom_to( EvgView view, EvgView toView, i16 offset )
 {
-    lv_obj_set_y( view, lv_bottom_of( toView , offset) );
+    lv_obj_set_y( view, evg_bottom_of( toView , offset) );
 }
 
-static LvTimer   tmpTimer = NULL;
-static TickExec  next_exec = NULL;
+static EvgTimer   tmpTimer = NULL;
+static EvgTickExec  next_exec = NULL;
 static void *    next_exec_ptr = NULL;
 
-static void next_auto_exec( LvTimer t )
+static void next_auto_exec( EvgTimer t )
 {
     if (next_exec) {
         next_exec(t->user_data);
@@ -276,7 +276,7 @@ static void next_auto_exec( LvTimer t )
     next_exec_ptr = NULL;
 }
 
-void    evg_next_tick_run( TickExec exec, void * cus_ptr )
+void    evg_next_tick_run( EvgTickExec exec, void * cus_ptr )
 {
     next_exec = exec;
     next_exec_ptr = cus_ptr;
@@ -285,11 +285,11 @@ void    evg_next_tick_run( TickExec exec, void * cus_ptr )
     lv_timer_set_repeat_count( tmpTimer, 1);
 }
 
-static LvTimer   delay_timer = NULL;
-static TickExec  delay_exec = NULL;
+static EvgTimer   delay_timer = NULL;
+static EvgTickExec  delay_exec = NULL;
 static void *    delay_exec_ptr = NULL;
 
-static void delay_auto_exec( LvTimer t )
+static void delay_auto_exec( EvgTimer t )
 {
     if (delay_exec) {
         delay_exec(t->user_data);
@@ -298,7 +298,7 @@ static void delay_auto_exec( LvTimer t )
     delay_exec_ptr = NULL;
 }
 
-void    evg_delay_run( TickExec exec, int delayMS, void * cus_ptr )
+void    evg_delay_run( EvgTickExec exec, int delayMS, void * cus_ptr )
 {
     delay_exec = exec;
     delay_exec_ptr = cus_ptr;

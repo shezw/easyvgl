@@ -11,7 +11,7 @@
     -----------------------------------------------------------
 */
 
-#include "tools.h"
+#include "lv_wrapper.h"
 #include "styles.h"
 #include "fonts.h"
 
@@ -20,7 +20,7 @@
 
 ViewSize DefaultSize = {LV_SIZE_CONTENT,LV_SIZE_CONTENT};
 
-void markCustomStyle        ( LvStyle * styleList, LvStyle style )
+void markCustomStyle        ( EvgStyle * styleList, EvgStyle style )
 {
     for (int i = 0; i < MAX_CUSTOM_STYLES; i++) {
         if (styleList[i] == style ) return;
@@ -32,33 +32,33 @@ void markCustomStyle        ( LvStyle * styleList, LvStyle style )
     }
 }
 
-void releaseCustomStyles    ( LvStyle * styleList, LvStyle style )
+void releaseCustomStyles    ( EvgStyle * styleList, EvgStyle style )
 {
     if (styleList==NULL) return;
     for (int i = 0; i < MAX_CUSTOM_STYLES; i++) {
         if (styleList[i] == style) {
 //            printf("releaseCustomStyles free [%p]\n",styleList[i]);
-            lv_mem_freestyleList[i]);
+            lv_mem_free(styleList[i]);
             styleList[i] = NULL;
         }
     }
 }
 
-void cleanCustomStyles      ( LvStyle * styleList )
+void cleanCustomStyles      ( EvgStyle * styleList )
 {
     if (styleList==NULL) return;
     for (int i = 0; i < MAX_CUSTOM_STYLES; i++) {
         if (styleList[i] != NULL) {
             // FIXME free twice
 //            printf("cleanCustomStyles free [%p] (%d) \n",styleList[i],i);
-            lv_mem_free styleList[i] );
+            lv_mem_free( styleList[i] );
             styleList[i] = NULL;
         }
     }
-    lv_mem_freestyleList);
+    lv_mem_free(styleList);
 }
 
-void lv_view_set_style( LvView view, LvViewStyle * style )
+void evg_view_set_style( EvgView view, EvgViewStyle * style )
 {
     if ( style->style >= ViewStyle_Max )
         return;
@@ -133,7 +133,7 @@ void lv_view_set_style( LvView view, LvViewStyle * style )
             break;
 
         case ViewStyle_Font:
-            lv_obj_set_style_text_font( view, LvFontGet( (char*)style->str_v ), style->onState);
+            lv_obj_set_style_text_font( view, evg_font_get( (char*)style->str_v ), style->onState);
             break;
 
         case ViewStyle_FontColor:
@@ -168,11 +168,11 @@ void lv_view_set_style( LvView view, LvViewStyle * style )
             break;
 
         case ViewStyle_Radius:
-            lv_view_radius( view, (u16) style->int_v , style->onState);
+            evg_view_radius( view, (u16) style->int_v , style->onState);
             break;
 
         case ViewStyle_ImageRadius:
-            lv_view_radius( view, (u16) style->int_v, style->onState);
+            evg_view_radius( view, (u16) style->int_v, style->onState);
             lv_obj_set_style_clip_corner( view, true, style->onState);
             break;
 
@@ -195,13 +195,13 @@ void lv_view_set_style( LvView view, LvViewStyle * style )
 
 }
 
-LvStyle * lv_view_set_styles( LvView view, LvViewStyle * styles, LvStyle * styleList )
+EvgStyle * evg_view_set_styles( EvgView view, EvgViewStyle * styles, EvgStyle * styleList )
 {
-    LvViewStyle * style;
+    EvgViewStyle * style;
 
     if (styleList==NULL) {
-        styleList = (LvStyle*) malloc(MAX_CUSTOM_STYLES * sizeof(LvStyle *));
-        lv_memset(styleList,0,MAX_CUSTOM_STYLES * sizeof(LvStyle *));
+        styleList = (EvgStyle*) malloc(MAX_CUSTOM_STYLES * sizeof(EvgStyle *));
+        memset(styleList,0,MAX_CUSTOM_STYLES * sizeof(EvgStyle *));
     }
     static int marked = 0;
 
@@ -215,13 +215,13 @@ LvStyle * lv_view_set_styles( LvView view, LvViewStyle * styles, LvStyle * style
 
             case ViewStyle_Extend:
             {
-                lv_view_set_styles( view, style->obj_v, styleList );
+                evg_view_set_styles( view, style->obj_v, styleList );
                 break;
             }
 
             case ViewStyle_BackgroundGradient: {
-                LvGradientDef *grad = (LvGradientDef *) style->obj_v;
-                LvStyle gradStyle = lv_view_gradient_cus(grad->c1, grad->c2, grad->p1 ? grad->p1 : 0,
+                EvgGradientDef *grad = (EvgGradientDef *) style->obj_v;
+                EvgStyle gradStyle = evg_view_gradient_cus(grad->c1, grad->c2, grad->p1 ? grad->p1 : 0,
                                                          grad->p2 ? grad->p2 : 255, grad->dir);
                 lv_obj_add_style(view, gradStyle, style->onState);
 //                    marked++;
@@ -233,9 +233,9 @@ LvStyle * lv_view_set_styles( LvView view, LvViewStyle * styles, LvStyle * style
             }
 
             case ViewStyle_Shadow: {
-                LvShadowDef *shadow = (LvShadowDef *) style->obj_v;
+                EvgShadowDef *shadow = (EvgShadowDef *) style->obj_v;
                 if (shadow) {
-                    LvStyle shadowStyle = lv_view_shadow(shadow->color, shadow->size, shadow->x, shadow->y);
+                    EvgStyle shadowStyle = evg_view_shadow(shadow->color, shadow->size, shadow->x, shadow->y);
                     lv_obj_add_style(view, shadowStyle, style->onState);
                     marked++;
                     markCustomStyle(styleList, shadowStyle);
@@ -246,7 +246,7 @@ LvStyle * lv_view_set_styles( LvView view, LvViewStyle * styles, LvStyle * style
             }
 
             default:
-                lv_view_set_style( view, style );
+                evg_view_set_style( view, style );
                 break;
         }
 
@@ -254,7 +254,7 @@ LvStyle * lv_view_set_styles( LvView view, LvViewStyle * styles, LvStyle * style
 
     if (marked==0)
     {
-        lv_mem_freestyleList);
+        lv_mem_free(styleList);
         return NULL;
     }
 

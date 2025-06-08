@@ -178,10 +178,10 @@ void setUserPreferenceBool( PreferenceUserKey key, bool value )
 {
     switch (key) {
         case UserPrefKey_wifi_enabled:
-            userPreference->wifienabled = value;
+            userPreference->wifi_enabled = value;
             break;
         case UserPrefKey_audio_enabled:
-            userPreference->audioenabled = value;
+            userPreference->audio_enabled = value;
             break;
         default:
             break;

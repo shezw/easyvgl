@@ -14,7 +14,7 @@
 #ifndef EVG_UIKIT_TOAST
 #define EVG_UIKIT_TOAST
 
-#include "lv_wrapper.h"
+#include "uikit.h"
 
 #ifdef __cplusplus
 extern "C" {

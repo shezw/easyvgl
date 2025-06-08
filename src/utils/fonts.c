@@ -15,26 +15,26 @@
 
 typedef struct FontDeclare_t
 {
-    char id[32];
-    LvFont font;
+    char id[EVG_MAX_FONT_NAME_LEN];
+    EvgFont font;
 } FontDeclare ;
 
-static FontDeclare * fonts[MAX_APP_FONT_DECLARE] = {0};
+static FontDeclare * fonts[EVG_MAX_FONT_DECLARE] = {0};
 static int total_font = 0;
 
-LvFont LvFontDeclareCustom( char * id, char * src, int size, int line_height, LV_FT_FONT_STYLE style )
+EvgFont evg_font_declare_cus( char * id, char * src, int size, int line_height, LV_FT_FONT_STYLE style )
 {
-    printf("LvFontDeclareCustom id:%s src:%s size %d, line_height:%d \n",id,src,size,line_height);
+    printf("evg_font_declare_cus id:%s src:%s size %d, line_height:%d \n",id,src,size,line_height);
     assert( strlen(id) < 32 );
-    assert( total_font < MAX_APP_FONT_DECLARE );
+    assert( total_font < EVG_MAX_FONT_DECLARE );
 
     FontDeclare * font = ( FontDeclare * ) malloc( sizeof( FontDeclare ) );
-    lv_memset(font,0,sizeof(FontDeclare));
+    memset(font,0,sizeof(FontDeclare));
 
     strcpy( font->id, id );
-    font->font = lv_font( src, size, style );
+    font->font = evg_font( src, size, style );
 
-    if (line_height>DEFAULT_FONT_LINE_HEIGHT)
+    if (line_height>EVG_DEFAULT_FONT_LINE_HEIGHT)
         font->font->line_height = line_height;
 
     fonts[total_font++] = font;
@@ -42,17 +42,17 @@ LvFont LvFontDeclareCustom( char * id, char * src, int size, int line_height, LV
     return font->font;
 }
 
-LvFont LvFontDeclareWithLineHeight( char * id, char * src, int size, int line_height )
+EvgFont evg_font_declare_with_line_height( char * id, char * src, int size, int line_height )
 {
-    return LvFontDeclareCustom( id, src, size, line_height, FT_FONT_STYLE_NORMAL);
+    return evg_font_declare_cus( id, src, size, line_height, FT_FONT_STYLE_NORMAL);
 }
 
-LvFont LvFontDeclare( char * id, char * src, int size )
+EvgFont evg_font_declare( char * id, char * src, int size )
 {
-    return LvFontDeclareWithLineHeight( id, src, size, 0 );
+    return evg_font_declare_with_line_height( id, src, size, 0 );
 }
 
-LvFont LvFontGet( char * id )
+EvgFont evg_font_get( char * id )
 {
     assert( strlen(id) < 32 );
 
@@ -65,7 +65,7 @@ LvFont LvFontGet( char * id )
             return fonts[i]->font;
     }
 
-    assert( total_font < MAX_APP_FONT_DECLARE );
+    assert( total_font < EVG_MAX_FONT_DECLARE );
     return NULL;
 }
 

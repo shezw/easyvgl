@@ -1,0 +1,13 @@
+{
+	"name":	"User.json",
+	"description":	"Used for save user preference",
+	"version":	"1.0.0",
+	"createtime":	0,
+	"lasttime":	0,
+	"screenLighten": 75,
+	"volume":	50,
+	"wifi_enabled":	true,
+	"audio_enabled": true,
+	"wifissid":	"",
+	"wifipass":	""
+}

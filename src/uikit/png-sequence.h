@@ -14,7 +14,7 @@
 #ifndef EVG_PNG_SEQUENCE_H
 #define EVG_PNG_SEQUENCE_H
 
-#include "../utils/lv_wrapper.h"
+#include "uikit.h"
 
 #ifdef __cplusplus
 extern "C" {

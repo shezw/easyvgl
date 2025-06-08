@@ -13,7 +13,6 @@
 
 #include <math.h>
 
-#include "app.h"
 #include "toast.h"
 
 void toast_close( ToastView * tView, bool withAnimation )
@@ -21,7 +20,7 @@ void toast_close( ToastView * tView, bool withAnimation )
     lv_timer_del( tView->timer );
 
     EVG_DEL_VIEW( tView->self );
-    lv_mem_free(tView);
+    free(tView);
 }
 
 static void toast_auto_close( EvgTimer t )
@@ -32,7 +31,7 @@ static void toast_auto_close( EvgTimer t )
 
     evg_view_hide(getApp()->toastLayer);
 
-    lv_mem_freetView);
+    free(tView);
 }
 
 static EvgViewStyle toastMaskStyles[] =
@@ -83,7 +82,7 @@ ToastView * toast_show( const char * title, u32 durationMS, bool showMask, bool 
     this->mask = evg_view_max(evg_image(this->self, Image_Common_default_path"maskBg.png"));
 
     this->container = evg_view_clean(evg_view(this->self));
-    this->titleLabel = lv_label( this->container );
+    this->titleLabel = evg_label( this->container );
 
     lv_label_set_text( this->titleLabel, title );
 
@@ -117,7 +116,7 @@ void progress_show( const char * title )
         lv_bar_set_value(progressToastBar, 0, LV_ANIM_OFF);
 
         if (title) {
-            progressToastText = lv_text(progressToast, title);
+            progressToastText = evg_text(progressToast, title);
             SET_STYLES( progressToastText, progressLabelStyles, progressStyleList );
         }
         SET_STYLES( progressToast, progressContainerStyles, progressStyleList );
@@ -141,7 +140,7 @@ void progress_update( const char * title, double percent )
     if (title!=NULL)
     {
         if (progressToastText==NULL) {
-            progressToastText = lv_text(progressToast, title);
+            progressToastText = evg_text(progressToast, title);
             SET_STYLES( progressToastText, progressLabelStyles, progressStyleList);
         }
         else lv_label_set_text( progressToastText, title );

@@ -11,8 +11,8 @@
     -----------------------------------------------------------
 */
 
-#ifndef EASYVGL_BASE_TYPES_H
-#define EASYVGL_BASE_TYPES_H
+#ifndef EVG_UTILS_TYPES_H
+#define EVG_UTILS_TYPES_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,8 +21,16 @@
 #include <stdint.h>
 #include <assert.h>
 #include <unistd.h>
+#include <stddef.h>
+#include <limits.h>
+
+#include <pthread.h>
+
+#include <sys/time.h>
 
 #include <lvgl/lvgl.h>
+
+#include <cjson/cJSON.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,26 +82,32 @@ extern "C" {
 #define min(x,y) (x<y?x:y)
 #define UTF8_CHAR_LEN 3
 
+#define APP_Common_default_path     "./res/"
+#define Preference_default_path     "./res/preferences/"
+#define Image_Common_default_path   "S:./res/assets/images/"
+#define Audio_Common_default_path   "./res/assets/audios/"
+#define FX_Common_default_path      "S:./res/assets/fx/"
+
 typedef void (*LoopCaller) (void) ;
 
 #define CNew(O,T) \
     T * O = (T*) malloc( sizeof(T) ); \
-    lv_memset( O, 0, sizeof(T) );
+    memset( O, 0, sizeof(T) );
 
 #define CNewAt(P,T) \
-    P = (T*) malloc(sizeof(T)); \
-    lv_memset( P, 0, sizeof(T) ); \
+    P = (T*) lv_mem_alloc(sizeof(T)); \
+    memset( P, 0, sizeof(T) ); \
 
 #define CNewString( P, LEN ) \
     P = malloc( LEN + 1 );        \
-    lv_memset( P, 0, LEN+1 );        \
+    memset( P, 0, LEN+1 );        \
 
 #define ReleaseMemList( MEM_LIST, LIST_COUNT ) \
 if (MEM_LIST){ \
     for (int i = 0; i < LIST_COUNT; i++) {\
-        if (MEM_LIST[i]){ lv_mem_freeMEM_LIST[i]); MEM_LIST[i] = NULL; }\
+        if (MEM_LIST[i]){ lv_mem_free(MEM_LIST[i]); MEM_LIST[i] = NULL; }\
     }\
-    lv_mem_freeMEM_LIST);\
+    lv_mem_free(MEM_LIST);\
     MEM_LIST = NULL;\
 }
 
@@ -102,4 +116,4 @@ if (MEM_LIST){ \
 #endif
 
 
-#endif //EASYVGL_BASE_TYPES_H
+#endif //EVG_UTILS_TYPES_H

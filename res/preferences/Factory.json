@@ -1,0 +1,9 @@
+{
+  "name":	"Factory.json",
+  "description":	"Used for save factory preference",
+  "version":	"1.0.0",
+  "createtime":	0,
+  "lasttime":	0,
+  "wifissid":	"your_wifi_ssid",
+  "wifipass": "your_wifi_password",
+}

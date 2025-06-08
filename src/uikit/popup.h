@@ -14,7 +14,7 @@
 #ifndef EVG_UIKIT_POPUP_H
 #define EVG_UIKIT_POPUP_H
 
-#include "../utils/types.h"
+#include "uikit.h"
 
 #ifdef __cplusplus
 extern "C" {

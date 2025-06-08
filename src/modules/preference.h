@@ -20,11 +20,11 @@
 extern "C" {
 #endif
 
-#define USER_PREFERENCE_FILE        PreferencePath"User.json"
-#define OTA_PREFERENCE_FILE         PreferencePath"OTA.json"
-#define MACHINE_PREFERENCE_FILE     PreferencePath"Machine.json"
-#define FACTORY_PREFERENCE_FILE     PreferencePath"Factory.json"
-#define RECENT_USE_FILE             PreferencePath"RecentUse.json"
+#define USER_PREFERENCE_FILE        Preference_default_path"User.json"
+#define OTA_PREFERENCE_FILE         Preference_default_path"OTA.json"
+#define MACHINE_PREFERENCE_FILE     Preference_default_path"Machine.json"
+#define FACTORY_PREFERENCE_FILE     Preference_default_path"Factory.json"
+#define RECENT_USE_FILE             Preference_default_path"RecentUse.json"
 
 
 /* Used by some code below as an example datatype. */

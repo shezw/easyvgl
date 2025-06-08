@@ -32,19 +32,19 @@ extern "C" {
 #define EvgStyle     lv_style_t *
 #define EvgColor     lv_color_t
 
-#define EV_DEL_VIEW(v) \
+#define EVG_DEL_VIEW(v) \
     if( v != NULL ){\
     lv_obj_del(v);  \
     v=NULL;\
     }
 
-#define EV_DEL_TIMER(v) \
+#define EVG_DEL_TIMER(v) \
     if( v != NULL ){\
     lv_timer_del(v);  \
     v=NULL;\
     }
 
-#define EV_FREE_USER_DATA(o) \
+#define EVG_FREE_USER_DATA(o) \
     if( o != NULL && o->user_data != NULL ){ \
     lv_mem_free(o);              \
     }
@@ -53,49 +53,49 @@ EvgView  evg_view( EvgView parent );
 void    evg_view_remove( EvgView obj );
 EvgView  evg_box( EvgView parent );
 EvgImg   evg_image( EvgView parent, const char * src );
-EvgLabel evg_label( LvView parent );
-LvLabel evg_text( LvView parent, const char * str );
-LvBtn   evg_button( LvView parent );
-LvView  evg_flex_view( LvView parent, lv_flex_flow_t flex );
+EvgLabel evg_label( EvgView parent );
+EvgLabel evg_text( EvgView parent, const char * str );
+EvgBtn   evg_button( EvgView parent );
+EvgView  evg_flex_view( EvgView parent, lv_flex_flow_t flex );
 
-LvStyle evg_view_shadow( u32 color, u16 size, i16 x, i16 y );
-LvStyle evg_view_gradient_cus( u32 c1, u32 c2, i16 pct1, i16 pct2, bool verOrHor );
-LvStyle evg_view_gradient_ver(u32 c1, u32 c2 );
-LvStyle evg_view_gradient_hor( u32 c1, u32 c2 );
-LvStyle evg_view_gradient_ver_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 );
-LvStyle evg_view_gradient_hor_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 );
+EvgStyle evg_view_shadow( u32 color, u16 size, i16 x, i16 y );
+EvgStyle evg_view_gradient_cus( u32 c1, u32 c2, i16 pct1, i16 pct2, bool verOrHor );
+EvgStyle evg_view_gradient_ver(u32 c1, u32 c2 );
+EvgStyle evg_view_gradient_hor( u32 c1, u32 c2 );
+EvgStyle evg_view_gradient_ver_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 );
+EvgStyle evg_view_gradient_hor_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 );
 
-LvView  evg_view_radius( LvView view, int r, lv_state_t state );
-LvView  evg_view_max( LvView view );
-LvView  evg_view_content( LvView view );
-LvView  evg_view_clean( LvView obj );
-LvView  evg_view_transp( LvView obj );
-LvView  evg_view_hide( LvView obj );
-LvView  evg_view_show( LvView obj );
-LvView  evg_view_scrollable( LvView obj );
+EvgView  evg_view_radius( EvgView view, int r, lv_state_t state );
+EvgView  evg_view_max( EvgView view );
+EvgView  evg_view_content( EvgView view );
+EvgView  evg_view_clean( EvgView obj );
+EvgView  evg_view_transp( EvgView obj );
+EvgView  evg_view_hide( EvgView obj );
+EvgView  evg_view_show( EvgView obj );
+EvgView  evg_view_scrollable( EvgView obj );
 
-LvFont  evg_font( char * src, int fontSize, LV_FT_FONT_STYLE fstyle );
+EvgFont  evg_font( char * src, int fontSize, LV_FT_FONT_STYLE fstyle );
 
-i16     evg_left_of( LvView view, i16 offset );
-i16     evg_right_of( LvView view, i16 offset );
-i16     evg_top_of( LvView view, i16 offset );
-i16     evg_bottom_of( LvView view, i16 offset );
+i16     evg_left_of( EvgView view, i16 offset );
+i16     evg_right_of( EvgView view, i16 offset );
+i16     evg_top_of( EvgView view, i16 offset );
+i16     evg_bottom_of( EvgView view, i16 offset );
 
-void    evg_left_to( LvView view, LvView toView, i16 offset );
-void    evg_right_to( LvView view, LvView toView, i16 offset );
-void    evg_top_to( LvView view, LvView toView, i16 offset );
-void    evg_bottom_to( LvView view, LvView toView, i16 offset );
+void    evg_left_to( EvgView view, EvgView toView, i16 offset );
+void    evg_right_to( EvgView view, EvgView toView, i16 offset );
+void    evg_top_to( EvgView view, EvgView toView, i16 offset );
+void    evg_bottom_to( EvgView view, EvgView toView, i16 offset );
 
-typedef void (*TickExec) (void * cus_ptr);
+typedef void (*EvgTickExec) (void * cus_ptr);
 
-void    evg_next_tick_run( TickExec exec, void * cus_ptr );
+void    evg_next_tick_run( EvgTickExec exec, void * cus_ptr );
 
 /**
  * !!!!!!!!!!
  * delay_run  must use carefully  cause it only used with limited 1 exec
  * and make sure  you do not run it in the period
  */
-void    evg_delay_run( TickExec exec, int delayMS, void * cus_ptr );
+void    evg_delay_run( EvgTickExec exec, int delayMS, void * cus_ptr );
 
 /**
  * Methods extern on Porting Files
