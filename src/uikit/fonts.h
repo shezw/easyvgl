@@ -11,8 +11,8 @@
     -----------------------------------------------------------
 */
 
-#ifndef EASYVGL_UIKIT_FONTS_H
-#define EASYVGL_UIKIT_FONTS_H
+#ifndef EVG_UIKIT_FONTS_H
+#define EVG_UIKIT_FONTS_H
 
 #include "../utils/types.h"
 
@@ -20,11 +20,11 @@
 extern "C" {
 #endif
 
-#ifndef USE_EASYVGL_DEFAULT_FONTS
-#define USE_EASYVGL_DEFAULT_FONTS 1
-#endif // USE_EASYVGL_DEFAULT_FONTS
+#ifndef USE_EVG_DEFAULT_FONTS
+#define USE_EVG_DEFAULT_FONTS 1
+#endif // USE_EVG_DEFAULT_FONTS
 
-#if USE_EASYVGL_DEFAULT_FONTS
+#if USE_EVG_DEFAULT_FONTS
 
 #define Arial_FontName              "Arial.ttf"
 
@@ -37,12 +37,12 @@ extern "C" {
 
 #define DroidSansFallback_FontName  "DroidSansFallback.ttf"
 
-#endif//USE_EASYVGL_DEFAULT_FONTS
+#endif//USE_EVG_DEFAULT_FONTS
 
-int easyvgl_default_fonts_init();
+int evg_default_fonts_init();
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //EASYVGL_UIKIT_FONTS_H
+#endif //EVG_UIKIT_FONTS_H

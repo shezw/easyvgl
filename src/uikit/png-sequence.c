@@ -24,8 +24,8 @@ static void showFrame( PNGSequence * seq )
 
     if( !seq->useSharedFile )
     {
-        lv_memset(fileSrc,0,SEQ_PATH_MAX_LEN);
-        lv_memset(tmpFile,0,SEQ_PATH_MAX_LEN);
+        memset(fileSrc,0,SEQ_PATH_MAX_LEN);
+        memset(tmpFile,0,SEQ_PATH_MAX_LEN);
 
         sprintf( fileSrc, "%s%03d.png", seq->directory, seq->f );
         sprintf( fileSrcLast, "%s%03d.png", seq->directory, seq->f==0 ? seq->max-1 : seq->f-1 );
@@ -33,7 +33,7 @@ static void showFrame( PNGSequence * seq )
     }
 
     if (seq->self==NULL)
-            seq->self = lv_image( seq->parent, seq->useSharedFile ? tmpFile : fileSrc );
+            seq->self = evg_image( seq->parent, seq->useSharedFile ? tmpFile : fileSrc );
 
     lv_img_set_src( seq->self, seq->useSharedFile ? tmpFile : fileSrc );
 
@@ -41,7 +41,7 @@ static void showFrame( PNGSequence * seq )
         lv_img_cache_invalidate_src( fileSrcLast );
 }
 
-static void pngSequencePlayFrame( LvTimer e )
+static void pngSequencePlayFrame( EvgTimer e )
 {
     PNGSequence * seq = (PNGSequence*) e->user_data;
     if( seq->paused ) return;
@@ -112,7 +112,7 @@ static void pngSequenceStopCallback(PNGSequence * this, stopCallback_f stopCallb
     this->stopCbPtr    = ptr;
 }
 
-PNGSequence * pngSequenceCreate( LvView parent, char * directory, uint32_t total_frames, bool loop )
+PNGSequence * pngSequenceCreate( EvgView parent, char * directory, uint32_t total_frames, bool loop )
 {
     CNew(seq, PNGSequence);
     CNewString(seq->directory, strlen(directory));
@@ -142,8 +142,8 @@ void  pngSequenceDestroy( PNGSequence * this )
     if (this->directory && strlen(this->directory)>0) {
         lv_mem_free(this->directory);
     }
-    EV_DEL_TIMER(this->timer);
-    EV_DEL_VIEW(this->self);
+    EVG_DEL_TIMER(this->timer);
+    EVG_DEL_VIEW(this->self);
 
-    lv_mem_freethis);
+    lv_mem_free(this);
 }

@@ -13,29 +13,29 @@
 
 #include "tools.h"
 
-LvView lv_view( LvView parent )
+EvgView lv_view( EvgView parent )
 {
-    LvView obj = lv_obj_create( parent );
+    EvgView obj = lv_obj_create( parent );
     lv_obj_set_size( obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT );
 
     return obj;
 }
 
 
-void lv_view_remove( LvView obj )
+void lv_view_remove( EvgView obj )
 {
     lv_obj_del(obj);
 }
 
-LvView  lv_box( LvView parent )
+EvgView  lv_box( EvgView parent )
 {
     return lv_view_clean(lv_view_transp(lv_view(parent)));
 }
 
 
-LvImg  lv_image( LvView parent, const char * src )
+EvgImg  lv_image( EvgView parent, const char * src )
 {
-    LvImg img = lv_img_create( parent );
+    EvgImg img = lv_img_create( parent );
     lv_obj_set_size( img, LV_SIZE_CONTENT, LV_SIZE_CONTENT );
 
     if (src!=NULL)
@@ -44,37 +44,37 @@ LvImg  lv_image( LvView parent, const char * src )
     return img;
 }
 
-LvLabel  lv_label( LvView parent )
+EvgLabel  lv_label( EvgView parent )
 {
-    LvLabel label = lv_label_create( parent );
+    EvgLabel label = lv_label_create( parent );
     lv_obj_set_size( label, LV_SIZE_CONTENT, LV_SIZE_CONTENT );
 
     return label;
 }
 
-LvLabel lv_text( LvView parent, const char * str )
+EvgLabel lv_text( EvgView parent, const char * str )
 {
-    LvLabel label = lv_label(parent);
+    EvgLabel label = lv_label(parent);
     lv_label_set_text(label,str);
     return label;
 }
 
-LvBtn  lv_button( LvView parent )
+EvgBtn  lv_button( EvgView parent )
 {
-    LvBtn button = lv_btn_create( parent );
+    EvgBtn button = lv_btn_create( parent );
 
     return button;
 }
 
-LvView lv_flex_view( LvView parent, lv_flex_flow_t flex )
+EvgView lv_flex_view( EvgView parent, lv_flex_flow_t flex )
 {
-    LvView obj = lv_view( parent );
+    EvgView obj = lv_view( parent );
     lv_obj_set_layout(obj, LV_LAYOUT_FLEX);
     lv_obj_set_flex_flow(obj, flex);
     return obj;
 }
 
-LvStyle lv_view_shadow( u32 color, u16 size, i16 x, i16 y )
+EvgStyle lv_view_shadow( u32 color, u16 size, i16 x, i16 y )
 {
     lv_style_t * style = malloc( sizeof(lv_style_t) );
     lv_style_init(style);
@@ -88,7 +88,7 @@ LvStyle lv_view_shadow( u32 color, u16 size, i16 x, i16 y )
     return style;
 }
 
-LvStyle lv_view_gradient_cus( u32 c1, u32 c2, i16 pct1, i16 pct2, bool verOrHor )
+EvgStyle lv_view_gradient_cus( u32 c1, u32 c2, i16 pct1, i16 pct2, bool verOrHor )
 {
     lv_style_t * style = malloc( sizeof(lv_style_t) );
     lv_style_init(style);
@@ -111,12 +111,12 @@ LvStyle lv_view_gradient_cus( u32 c1, u32 c2, i16 pct1, i16 pct2, bool verOrHor 
 }
 
 
-LvStyle lv_view_gradient_ver_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 )
+EvgStyle lv_view_gradient_ver_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 )
 {
     return lv_view_gradient_cus( c1, c2, pct1, pct2, true );
 }
 
-LvStyle lv_view_gradient_hor_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 )
+EvgStyle lv_view_gradient_hor_cus( u32 c1, u32 c2, i16 pct1, i16 pct2 )
 {
     return lv_view_gradient_cus( c1, c2, pct1, pct2, false );
 }
@@ -276,7 +276,7 @@ static void next_auto_exec( LvTimer t )
     next_exec_ptr = NULL;
 }
 
-void    lv_next_tick_run( TickExec exec, void * cus_ptr )
+void    evg_next_tick_run( TickExec exec, void * cus_ptr )
 {
     next_exec = exec;
     next_exec_ptr = cus_ptr;
@@ -298,7 +298,7 @@ static void delay_auto_exec( LvTimer t )
     delay_exec_ptr = NULL;
 }
 
-void    lv_delay_run( TickExec exec, int delayMS, void * cus_ptr )
+void    evg_delay_run( TickExec exec, int delayMS, void * cus_ptr )
 {
     delay_exec = exec;
     delay_exec_ptr = cus_ptr;

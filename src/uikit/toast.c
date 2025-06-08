@@ -20,22 +20,22 @@ void toast_close( ToastView * tView, bool withAnimation )
 {
     lv_timer_del( tView->timer );
 
-    EV_DEL_VIEW( tView->self );
+    EVG_DEL_VIEW( tView->self );
     lv_mem_free(tView);
 }
 
-static void toast_auto_close( LvTimer t )
+static void toast_auto_close( EvgTimer t )
 {
     ToastView * tView = (ToastView*) t->user_data;
 
-    EV_DEL_VIEW( tView->self );
+    EVG_DEL_VIEW( tView->self );
 
-    lv_view_hide(getApp()->toastLayer);
+    evg_view_hide(getApp()->toastLayer);
 
     lv_mem_freetView);
 }
 
-static LvViewStyle toastMaskStyles[] =
+static EvgViewStyle toastMaskStyles[] =
         {
 //                cssBg(0x0),
                 cssBgOpa(0),
@@ -43,7 +43,7 @@ static LvViewStyle toastMaskStyles[] =
                 cssEnd()
         };
 
-static LvViewStyle toastContainerStyles[] =
+static EvgViewStyle toastContainerStyles[] =
         {
                 cssBg(0xffffff),
                 cssRadius(20),
@@ -53,13 +53,13 @@ static LvViewStyle toastContainerStyles[] =
                 cssEnd()
         };
 
-static LvViewStyle toastLabelStyles[] =
+static EvgViewStyle toastLabelStyles[] =
         {
-                cssFont("LvFontLanTingHei_30",0x333333),
+                cssFont("EvgFontLanTingHei_30",0x333333),
                 cssEnd()
         };
 
-static LvViewStyle progressContainerStyles[] =
+static EvgViewStyle progressContainerStyles[] =
         {
                 cssExtend(&toastContainerStyles),
                 cssBorder(2,0xDDDDDD),
@@ -67,7 +67,7 @@ static LvViewStyle progressContainerStyles[] =
                 cssEnd()
         };
 
-static LvViewStyle progressLabelStyles[] =
+static EvgViewStyle progressLabelStyles[] =
         {
                 cssExtend(&toastLabelStyles),
                 cssAlignAt(TopMid,0,30),
@@ -78,11 +78,11 @@ ToastView * toast_show( const char * title, u32 durationMS, bool showMask, bool 
 {
     CNew( this, ToastView );
 
-    this->self = lv_box( getApp()->toastLayer );
-//    this->mask = lv_view_max(lv_view_clean(lv_view(this->self)));
-    this->mask = lv_view_max(lv_image(this->self, Image_CommonPath"maskBg.png"));
+    this->self = evg_box( getApp()->toastLayer );
+//    this->mask = evg_view_max(evg_view_clean(evg_view(this->self)));
+    this->mask = evg_view_max(evg_image(this->self, Image_Common_default_path"maskBg.png"));
 
-    this->container = lv_view_clean(lv_view(this->self));
+    this->container = evg_view_clean(evg_view(this->self));
     this->titleLabel = lv_label( this->container );
 
     lv_label_set_text( this->titleLabel, title );
@@ -94,23 +94,23 @@ ToastView * toast_show( const char * title, u32 durationMS, bool showMask, bool 
     this->timer = lv_timer_create( toast_auto_close , durationMS, this);
     lv_timer_set_repeat_count( this->timer, 1);
 
-    lv_view_show(getApp()->toastLayer);
+    evg_view_show(getApp()->toastLayer);
 
     return this;
 }
 
-static LvView progressToast = NULL;
-static LvView progressToastBar = NULL;
-static LvView progressToastMask = NULL;
-static LvLabel progressToastText = NULL;
-static LvLabel progressToastPercentText = NULL;
+static EvgView progressToast = NULL;
+static EvgView progressToastBar = NULL;
+static EvgView progressToastMask = NULL;
+static EvgLabel progressToastText = NULL;
+static EvgLabel progressToastPercentText = NULL;
 
-static LvStyle * progressStyleList = NULL;
+static EvgStyle * progressStyleList = NULL;
 
 void progress_show( const char * title )
 {
     if (progressToast==NULL) {
-        progressToast = lv_view_clean(lv_view( getApp()->toastLayer ));
+        progressToast = evg_view_clean(evg_view( getApp()->toastLayer ));
 
         progressToastBar = lv_bar_create(progressToast);
 
@@ -123,14 +123,14 @@ void progress_show( const char * title )
         SET_STYLES( progressToast, progressContainerStyles, progressStyleList );
     }
 
-    lv_view_show(progressToast);
-    lv_view_show(getApp()->toastLayer);
+    evg_view_show(progressToast);
+    evg_view_show(getApp()->toastLayer);
 }
 
 void progress_hide()
 {
-    lv_view_hide(progressToast);
-    lv_view_hide(getApp()->toastLayer);
+    evg_view_hide(progressToast);
+    evg_view_hide(getApp()->toastLayer);
 }
 
 void progress_update( const char * title, double percent )
@@ -147,7 +147,7 @@ void progress_update( const char * title, double percent )
         else lv_label_set_text( progressToastText, title );
     }else
     {
-        if (progressToastText!=NULL) lv_view_hide( progressToastText );
+        if (progressToastText!=NULL) evg_view_hide( progressToastText );
     }
 
     lv_bar_set_value( progressToastBar, (int)floor(percent), LV_ANIM_OFF );

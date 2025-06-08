@@ -11,8 +11,8 @@
     -----------------------------------------------------------
 */
 
-#ifndef EASYVGL_UIKIT_POPUP_H
-#define EASYVGL_UIKIT_POPUP_H
+#ifndef EVG_UIKIT_POPUP_H
+#define EVG_UIKIT_POPUP_H
 
 #include "../utils/types.h"
 
@@ -49,32 +49,32 @@ typedef struct PopupView_t {
     PopupType   type;
     u32         id;
 
-    LvView      self;
+    EvgView      self;
 
-    LvStyle *   styleList;
+    EvgStyle *   styleList;
 
     bool        showMask;
     bool        withAnimation;
 
-    LvView      mask;
+    EvgView      mask;
 
-    LvView      container;
-    LvLabel     titleLabel;
-    LvLabel     descLabel;
+    EvgView      container;
+    EvgLabel     titleLabel;
+    EvgLabel     descLabel;
 
     bool        useIntroImage;
-    LvView      introImageContainer;
-    LvImg       introImage;
+    EvgView      introImageContainer;
+    EvgImg       introImage;
 
-    LvView      buttonArea;
+    EvgView      buttonArea;
 
-    LvBtn       buttonConfirm;
-    LvLabel     buttonConfirmLabel;
-    LvBtn       buttonCancel;
-    LvLabel     buttonCancelLabel;
+    EvgBtn       buttonConfirm;
+    EvgLabel     buttonConfirmLabel;
+    EvgBtn       buttonCancel;
+    EvgLabel     buttonCancelLabel;
 
     void *      user_data;
-    LvTimer     timer;
+    EvgTimer     timer;
 
     struct PopupView_t * (*setButtonText) ( char * confirmText, char * cancelText, struct PopupView_t * this);
     struct PopupView_t * (*setIntroImageSrc) ( const char * imageSrc, struct PopupView_t * this);
@@ -120,7 +120,7 @@ PopupView * popupView = popupViewCreate( PopupType_QR, title, desc ); \
 if(popupView) {\
 popupView->setQRImageSrc( qrPath, popupView ); \
 popupView->setButtonText( UIKIT_TEXT_CONFIRM, NULL, popupView )->show(popupView);  \
-lv_view_hide(popupView->buttonConfirm); \
+evg_view_hide(popupView->buttonConfirm); \
 }
 
 
@@ -128,4 +128,4 @@ lv_view_hide(popupView->buttonConfirm); \
 }
 #endif
 
-#endif //EASYVGL_UIKIT_POPUP_H
+#endif //EVG_UIKIT_POPUP_H

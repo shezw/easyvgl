@@ -11,10 +11,10 @@
     -----------------------------------------------------------
 */
 
-#ifndef EASYVGL_PNG_SEQUENCE_H
-#define EASYVGL_PNG_SEQUENCE_H
+#ifndef EVG_PNG_SEQUENCE_H
+#define EVG_PNG_SEQUENCE_H
 
-#include "../utils/tools.h"
+#include "../utils/lv_wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,9 +52,9 @@ typedef void (*stopCallback_f)(struct PNGSequence_t *seq,void *ptr);
 
 typedef struct PNGSequence_t
 {
-    LvView  parent;
-    LvImg   self;
-    LvTimer timer;
+    EvgView  parent;
+    EvgImg   self;
+    EvgTimer timer;
 
     char *  directory;
     bool    loop;
@@ -77,11 +77,11 @@ typedef struct PNGSequence_t
     void (* setStopCb)  (struct PNGSequence_t *,stopCallback_f stopCallback,void *ptr);
 } PNGSequence;
 
-PNGSequence * pngSequenceCreate( LvView parent, char * directory, uint32_t total_frames, bool loop );
+PNGSequence * pngSequenceCreate( EvgView parent, char * directory, uint32_t total_frames, bool loop );
 void  pngSequenceDestroy( PNGSequence * this );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //EASYVGL_PNG_SEQUENCE_H
+#endif //EVG_PNG_SEQUENCE_H

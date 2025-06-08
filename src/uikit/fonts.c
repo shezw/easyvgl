@@ -2,17 +2,18 @@
     -----------------------------------------------------------
 
  	easyVGL
- 	simple-demo.c    2025/6/2   
- 	
- 	@link    : https://github.com/shezw/tinygui
+ 	fonts.c    2025/6/2
+
+ 	@link    : https://github.com/shezw/easyvgl
  	@author	 : shezw
  	@email	 : hello@shezw.com
 
     -----------------------------------------------------------
 */
 
-int main(int argc, char *argv[])
-{
+#include "fonts.h"
 
-    return 0;
+int evg_default_fonts_init() {
+
+    return -1;
 }

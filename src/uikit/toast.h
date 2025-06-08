@@ -11,10 +11,10 @@
     -----------------------------------------------------------
 */
 
-#ifndef EASYVGL_UIKIT_TOAST
-#define EASYVGL_UIKIT_TOAST
+#ifndef EVG_UIKIT_TOAST
+#define EVG_UIKIT_TOAST
 
-#include "common.h"
+#include "lv_wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,17 +22,17 @@ extern "C" {
 
 typedef struct ToastView_t
 {
-    LvView      self;
-    LvStyle *   styleList;
+    EvgView      self;
+    EvgStyle *   styleList;
 
     bool        showMask;
     bool        withAnimation;
 
-    LvView      mask;
+    EvgView      mask;
 
-    LvView      container;
-    LvLabel     titleLabel;
-    LvTimer     timer;
+    EvgView      container;
+    EvgLabel     titleLabel;
+    EvgTimer     timer;
 
     void (*refresh)             ( struct ToastView_t * view );
     void (*show)                ( struct ToastView_t * view );
@@ -60,4 +60,4 @@ void progress_update( const char * title, double percent );
 }
 #endif
 
-#endif //EASYVGL_UIKIT_TOAST
+#endif //EVG_UIKIT_TOAST

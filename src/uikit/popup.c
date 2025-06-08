@@ -14,16 +14,16 @@
 #include "app.h"
 #include "popup.h"
 
-static LvViewStyle popupMaskStyles[] =
+static EvgViewStyle popupMaskStyles[] =
         {
 //                cssBg(0x0),
                 cssBgOpa(0),
                 // cssBgImg("S:./app/assets/images/maskBg.png"),
-                cssSize(1920,440),
+                cssSize(LV_SIZE_COVER,LV_SIZE_COVER),
                 cssEnd()
         };
 
-static LvViewStyle popupContainerStyles[] =
+static EvgViewStyle popupContainerStyles[] =
         {
                 cssAlign(Center),
                 cssRadius(20),
@@ -34,18 +34,18 @@ static LvViewStyle popupContainerStyles[] =
                 cssEnd()
         };
 
-static LvViewStyle popupTitleStyles[] =
+static EvgViewStyle popupTitleStyles[] =
         {
-                cssFont("LvFontLanTingHei_30",0x333333),
+                cssFont("EvgFontLanTingHei_30",0x333333),
                 cssAlign(TopMid),
 //                cssSize(LV_SIZE_CONTENT,LV_SIZE_CONTENT),
 //                cssAbs(0,30),
                 cssEnd()
         };
 
-static LvViewStyle popupDescStyles[] =
+static EvgViewStyle popupDescStyles[] =
         {
-                cssFont("LvFontLanTingHei_24",0x333333),
+                cssFont("EvgFontLanTingHei_24",0x333333),
                 cssAlign(TopMid),
                 cssAbs(0,55),
                 cssTextOverflow(Wrap),
@@ -54,32 +54,32 @@ static LvViewStyle popupDescStyles[] =
                 cssEnd()
         };
 
-static LvViewStyle buttonAreaStyles[] = {
+static EvgViewStyle buttonAreaStyles[] = {
         cssNoBg(),
         cssSize(290,64),
         cssAlign(BottomMid),
         cssAbs(0,0),
-        cssFont("LvFontLanTingHei_24",0xFFFFFF),
-//            cssRadius(30),
+        cssFont("EvgFontLanTingHei_24",0xFFFFFF),
+        cssRadius(0),
         cssEnd(),
 };
 
-static LvViewStyle buttonConfirmStyles[] = {
+static EvgViewStyle buttonConfirmStyles[] = {
         cssBg(0xFF8F46),
         cssSize(126,54),
         cssAlign(LeftMid),
         cssAbs(5,0),
-        cssFont("LvFontLanTingHei_24",0xFFFFFF),
+        cssFont("EvgFontLanTingHei_24",0xFFFFFF),
         cssRadius(30),
         cssEnd(),
 };
 
-static LvViewStyle buttonCancelStyles[] = {
+static EvgViewStyle buttonCancelStyles[] = {
         cssBg(0xffeada),
         cssSize(126,54),
         cssAlign(RightMid),
         cssAbs(-5,0),
-        cssFont("LvFontLanTingHei_24",0xA0A0A0),
+        cssFont("EvgFontLanTingHei_24",0xA0A0A0),
         cssRadius(30),
         cssEnd(),
 };
@@ -90,8 +90,8 @@ static int  popupMaskCount = 0;
 static void popupViewInitButtons( char * confirmText, char * cancelText, PopupView * this );
 static void popupViewClose( PopupView * this );
 static void popupViewShow( PopupView * this );
-static void popupViewConfirmed( LvEvent e);
-static void popupViewCanceled( LvEvent e);
+static void popupViewConfirmed( EvgEvent e);
+static void popupViewCanceled( EvgEvent e);
 
 static PopupView * popupViewSingleton = NULL;
 
@@ -145,7 +145,7 @@ static void autoResizePopup( PopupView * this )
         }
 
         lv_obj_set_style_text_align( this->titleLabel, LV_TEXT_ALIGN_CENTER, 0);
-        lv_obj_set_style_text_font( this->descLabel, LvFontGet("IntroConfirmDescFont"), 0 );
+        lv_obj_set_style_text_font( this->descLabel, evg_font_get("IntroConfirmDescFont"), 0 );
     }else if ( this->descLabel != NULL )
     {
         lv_obj_set_width( this->container, max(lv_obj_get_width( this->buttonArea ),lv_obj_get_width(this->descLabel)) + 50 * 2 );
@@ -179,8 +179,8 @@ static PopupView * popupViewSetQRImageSrc( const char * src, PopupView * this )
     this->useIntroImage = true;
 
     if ( this->introImage == NULL ) {
-        this->introImageContainer = lv_view_clean(lv_view(this->container));
-        this->introImage = lv_image(this->introImageContainer, src);
+        this->introImageContainer = evg_view_clean(evg_view(this->container));
+        this->introImage = evg_image(this->introImageContainer, src);
     }else
         lv_img_set_src( this->introImage, src );
 
@@ -202,8 +202,8 @@ static PopupView * popupViewSetIntroImageSrc( const char * src, PopupView * this
     this->useIntroImage = true;
 
     if ( this->introImage == NULL ) {
-        this->introImageContainer = lv_view_clean(lv_view(this->container));
-        this->introImage = lv_image(this->introImageContainer, src);
+        this->introImageContainer = evg_view_clean(evg_view(this->container));
+        this->introImage = evg_image(this->introImageContainer, src);
     }else
         lv_img_set_src( this->introImage, src );
 
@@ -221,10 +221,10 @@ static bool             popupViewClosedOnConfirmed = false;
 
 static void popupViewClose( PopupView * this )
 {
-    EV_DEL_TIMER( this->timer );
-    EV_DEL_VIEW( this->self );
-    lv_view_hide(getApp()->popupLayer);
-    lv_mem_freepopupViewSingleton);
+    EVG_DEL_TIMER( this->timer );
+    EVG_DEL_VIEW( this->self );
+    evg_view_hide(getApp()->popupLayer);
+    lv_mem_free(popupViewSingleton);
     popupViewSingleton = NULL;
 
     if (popupViewClosedCallback) {
@@ -238,11 +238,11 @@ static void popupViewShow( PopupView * this )
 {
     autoResizePopup( this );
 
-    lv_view_show(this->self);
-    lv_view_show(getApp()->popupLayer);
+    evg_view_show(this->self);
+    evg_view_show(getApp()->popupLayer);
 }
 
-static void popupViewConfirmed( LvEvent e)
+static void popupViewConfirmed( EvgEvent e)
 {
     PopupView * this = (PopupView * ) e->user_data;
 
@@ -256,7 +256,7 @@ static void popupViewConfirmed( LvEvent e)
     this->close(this);
 }
 
-static void popupViewCanceled( LvEvent e)
+static void popupViewCanceled( EvgEvent e)
 {
     PopupView * this = (PopupView * ) e->user_data;
 
@@ -273,16 +273,16 @@ static void popupViewCanceled( LvEvent e)
 static void popupViewInitButtons( char * confirmText, char * cancelText, PopupView * this )
 {
 
-    this->buttonArea = lv_view_clean( lv_view( this->container ) );
+    this->buttonArea = evg_view_clean( evg_view( this->container ) );
     SET_STYLES( this->buttonArea, buttonAreaStyles, this->styleList );
 //    lv_obj_set_size( this->buttonArea, 274, 54 );
 
-    this->buttonConfirm     = lv_view_clean(lv_button( this->buttonArea ));
+    this->buttonConfirm     = evg_view_clean(lv_button( this->buttonArea ));
 
     SET_STYLES( this->buttonConfirm, buttonConfirmStyles, this->styleList );
 
     if( cancelText != NULL ) {
-        this->buttonCancel = lv_view_clean(lv_button(this->buttonArea));
+        this->buttonCancel = evg_view_clean(lv_button(this->buttonArea));
         this->buttonCancelLabel = lv_label(this->buttonCancel);
         lv_label_set_text( this->buttonCancelLabel, cancelText );
         lv_obj_center( this->buttonCancelLabel );
@@ -344,12 +344,12 @@ PopupView * popupViewCreate( PopupType type, const char * title, const char * de
     this->setButtonAreaX = popupViewSetButtonAreaX;
     this->setConfirmButtonAlign = popupViewSetButtonAreaAlign;
 
-    this->self = lv_box( getApp()->popupLayer  );
-//    this->mask = lv_view_max(lv_view_clean(lv_view(this->self)));
-    this->mask = lv_view_max(lv_image(this->self, Image_CommonPath"maskBg.png"));
+    this->self = evg_box( getApp()->popupLayer  );
+//    this->mask = evg_view_max(evg_view_clean(evg_view(this->self)));
+    this->mask = evg_view_max(evg_image(this->self, Image_Common_default_path"maskBg.png"));
     SET_STYLES(this->mask, popupMaskStyles, this->styleList);
 
-    this->container = lv_view_clean(lv_view(this->self));
+    this->container = evg_view_clean(evg_view(this->self));
 
     this->titleLabel = lv_label( this->container );
     lv_label_set_text( this->titleLabel, title );
@@ -366,7 +366,7 @@ PopupView * popupViewCreate( PopupType type, const char * title, const char * de
     }
     SET_STYLES(this->container, popupContainerStyles, this->styleList);
 
-    lv_view_hide( this->self );
+    evg_view_hide( this->self );
 
     return this;
 }
